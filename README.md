@@ -61,7 +61,7 @@ Sao chép URL này.
 Quay lại trang Tingee (Developers) -> Nhấn Thêm URL -> Dán URL vào và nhấn Lưu.
 
 ## ** 📊 Hiển thị lên Dashboard
-
+```yaml
 type: grid
 cards:
   - type: heading
@@ -119,22 +119,7 @@ cards:
       - sensor.tingee_noi_dung
     title: Lịch sử tiền về
     hours_to_show: 48
-
-## ** 🤖 Tự động hóa nâng cao (Automation)
-
-Bộ tích hợp tự động bắn một sự kiện (Event) có tên tingee_new_transaction. Bạn có thể dùng nó để làm các việc khác như nháy đèn:
-
-alias: "Nháy đèn khi có tiền về"
-trigger:
-  - platform: event
-    event_type: "tingee_new_transaction"
-action:
-  - service: light.turn_on
-    target:
-      entity_id: light.phong_khach
-    data:
-      flash: short
-      color_name: green
+```
 
 
 ## ** ❓ Xử lý sự cố (Troubleshooting)
