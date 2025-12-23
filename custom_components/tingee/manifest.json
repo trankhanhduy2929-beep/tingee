@@ -1,10 +1,9 @@
 {
   "domain": "tingee",
   "name": "Tingee Notifier",
-  "documentation": "https://tingee.gitbook.io/tai-lieu-hdsd-va-tich-hop-tingee",
-  "dependencies": ["webhook", "tts"],
-  "codeowners": [],
-  "version": "1.0.0",
-  "config_flow": true,
-  "iot_class": "cloud_push"
+  "codeowners": ["@trankhanhduy2929"],
+  "dependencies": [],
+  "documentation": "https://github.com/trankhanhduy2929-beep/sepay-notifier",
+  "iot_class": "cloud_push",
+  "version": "1.0.0"
 }
