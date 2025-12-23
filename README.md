@@ -62,15 +62,63 @@ Quay lại trang Tingee (Developers) -> Nhấn Thêm URL -> Dán URL vào và nh
 
 ## ** 📊 Hiển thị lên Dashboard
 
-Để xem thông tin giao dịch trên màn hình chính:
-
-Nhấn Edit Dashboard -> Add Card.
-
-Chọn thẻ Entities.
-
-Tìm thực thể sensor.tingee_last_transaction.
-
-(Tùy chọn) Sử dụng thuộc tính (Attributes) để hiện thêm Nội dung hoặc Ngân hàng bằng cách sử dụng attribute trong card.
+type: grid
+cards:
+  - type: heading
+    heading: tingee
+    heading_style: title
+  - type: vertical-stack
+    cards:
+      - type: custom:mushroom-title-card
+        title: Biến động số dư
+        subtitle: Hệ thống giám sát Tingee
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: custom:mushroom-entity-card
+            entity: sensor.tingee_tong_hom_nay
+            name: Hôm nay
+            icon: mdi:wallet-outline
+            icon_color: green
+            primary_info: state
+            secondary_info: name
+          - type: custom:mushroom-entity-card
+            entity: sensor.tingee_tong_thang_nay
+            name: Tháng này
+            icon: mdi:bank-transfer-in
+            icon_color: blue
+            primary_info: state
+            secondary_info: name
+      - type: custom:mushroom-template-card
+        primary: "{{ states('sensor.tingee_so_tien') | float | format_number }} VNĐ"
+        secondary: "{{ states('sensor.tingee_noi_dung') }}"
+        icon: mdi:cash-plus
+        icon_color: orange
+        layout: horizontal
+        multiline_secondary: true
+        tap_action:
+          action: more-info
+        entity: sensor.tingee_so_tien
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: template
+            content: "Ngân hàng: {{ states('sensor.tingee_ngan_hang') }}"
+            icon: mdi:bank
+            icon_color: grey
+          - type: template
+            content: >-
+              {% set t = states('sensor.tingee_thoi_gian') %} {{ t[8:10] }}:{{
+              t[10:12] }} - {{ t[6:8] }}/{{ t[4:6] }}/{{ t[0:4] }}
+            icon: mdi:clock-outline
+            icon_color: grey
+        alignment: start
+  - type: logbook
+    entities:
+      - sensor.tingee_so_tien
+      - sensor.tingee_noi_dung
+    title: Lịch sử tiền về
+    hours_to_show: 48
 
 ## ** 🤖 Tự động hóa nâng cao (Automation)
 
