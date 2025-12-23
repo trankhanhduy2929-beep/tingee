@@ -1,8 +1,8 @@
-🏦 Tingee Payments for Home Assistant (HASS)
+# **🏦 Tingee Payments for Home Assistant (HASS)**
 
 Bộ tích hợp mã nguồn mở cho phép Home Assistant nhận thông báo biến động số dư ngân hàng theo thời gian thực từ Tingee thông qua Webhook. Tự động phát loa thông báo (TTS), hiển thị số tiền và nội dung giao dịch ngay trên Dashboard của bạn.
 
-🌟 Tính năng chính
+## **🌟 Tính năng chính**
 
 Xác thực bảo mật: Sử dụng thuật toán HMAC SHA512 để kiểm tra chữ ký từ Tingee, đảm bảo dữ liệu không bị giả mạo.
 
@@ -14,11 +14,11 @@ Giao diện UI chuyên nghiệp: Cấu hình hoàn toàn qua giao diện Home As
 
 Thông báo thông minh: Tự động gửi URL Webhook vào mục thông báo hệ thống để bạn dễ dàng sao chép.
 
-🚀 Hướng dẫn cài đặt từ A - Z
+## **🚀 Hướng dẫn cài đặt  **
 
 Bước 1: Chuẩn bị phía Tingee
 
-Truy cập app.tingee.vn và đăng ký tài khoản.
+Truy cập [app.tingee.vn](https://app.tingee.vn/account/register-an-account?referral=0846087165) và đăng ký tài khoản.
 
 Liên kết tài khoản ngân hàng của bạn vào hệ thống Tingee.
 
