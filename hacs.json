@@ -1,0 +1,7 @@
+{
+  "name": "Tingee Notifier",
+  "content_type": "integration",
+  "domains": ["tingee"],
+  "iot_class": "cloud_push",
+  "render_readme": true
+}
