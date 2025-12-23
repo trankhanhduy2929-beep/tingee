@@ -1,87 +1,114 @@
-Tingee Payments for Home Assistant
-Bộ tích hợp (Custom Component) cho phép Home Assistant nhận thông báo biến động số dư ngân hàng theo thời gian thực từ Tingee thông qua Webhook.
+🏦 Tingee Payments for Home Assistant (HASS)
 
-✨ Tính năng chính
-Webhook bảo mật: Xác thực tính toàn vẹn dữ liệu bằng giải thuật HMAC SHA512 và Secret Token.
+Bộ tích hợp mã nguồn mở cho phép Home Assistant nhận thông báo biến động số dư ngân hàng theo thời gian thực từ Tingee thông qua Webhook. Tự động phát loa thông báo (TTS), hiển thị số tiền và nội dung giao dịch ngay trên Dashboard của bạn.
 
-Thông báo giọng nói (TTS): Tự động phát thông báo qua loa (Google Home, Alexa, v.v.) bằng Edge TTS khi có tiền về.
+🌟 Tính năng chính
 
-Cảm biến (Sensor): Hiển thị số tiền, nội dung, ngân hàng và thời gian giao dịch gần nhất lên Dashboard.
+Xác thực bảo mật: Sử dụng thuật toán HMAC SHA512 để kiểm tra chữ ký từ Tingee, đảm bảo dữ liệu không bị giả mạo.
 
-Giao diện trực quan: Cấu hình hoàn toàn qua UI (Config Flow), không cần sửa file configuration.yaml.
+Tích hợp sẵn TTS: Tự động gọi dịch vụ tts.speak (tối ưu cho Edge TTS) để đọc số tiền và nội dung khi có tiền về.
 
-Thông báo URL: Tự động tạo thông báo trong Home Assistant để bạn copy đường dẫn Webhook nhanh chóng.
+Sensor giao dịch: Tạo ra thực thể sensor.tingee_last_transaction lưu trữ thông tin: Số tiền, Nội dung, Ngân hàng, Mã giao dịch.
 
-🛠 Cài đặt
-Cách 1: Cài đặt thủ công
-Tải thư mục tingee từ Repository này.
+Giao diện UI chuyên nghiệp: Cấu hình hoàn toàn qua giao diện Home Assistant, hỗ trợ nút "Cấu hình lại" (Configure).
 
-Copy thư mục tingee vào thư mục custom_components trong bộ cài Home Assistant của bạn.
+Thông báo thông minh: Tự động gửi URL Webhook vào mục thông báo hệ thống để bạn dễ dàng sao chép.
 
-Cấu trúc thư mục: /config/custom_components/tingee/
+🚀 Hướng dẫn cài đặt từ A - Z
 
-Khởi động lại Home Assistant.
+Bước 1: Chuẩn bị phía Tingee
 
-Cách 2: Cài đặt qua HACS (Đang cập nhật)
-Mở HACS -> Integrations.
+Truy cập app.tingee.vn và đăng ký tài khoản.
 
-Chọn dấu 3 chấm ở góc trên bên phải -> Custom repositories.
+Liên kết tài khoản ngân hàng của bạn vào hệ thống Tingee.
 
-Dán URL của Repository này vào và chọn Category là Integration.
+Nhấp vào Ảnh đại diện (Avatar) -> chọn Developers.
 
-Nhấn Install.
+Sao chép dòng Secret Token (Đây là chìa khóa để HASS xác thực dữ liệu).
 
-⚙️ Cấu hình
-Bước 1: Chuẩn bị trên Tingee
-Đăng ký tài khoản tại app.tingee.vn.
+Bước 2: Cài đặt vào Home Assistant
 
-Thêm cửa hàng và liên kết tài khoản ngân hàng của bạn.
+Truy cập vào thư mục cấu hình của HASS (thường là /config).
 
-Vào mục Avatar -> Developers để lấy Secret Token.
+Tìm (hoặc tạo mới) thư mục custom_components.
 
-Bước 2: Thêm tích hợp vào Home Assistant
-Vào Settings -> Devices & Services -> Add Integration.
+Tải bộ mã nguồn này về và copy thư mục tingee vào đó.
 
-Tìm kiếm Tingee Payments.
+Cấu trúc đúng: /config/custom_components/tingee/__init__.py, v.v.
 
-Nhập các thông số:
+Khởi động lại Home Assistant (Bắt buộc để hệ thống nạp linh kiện mới).
 
-Secret Key: Token lấy từ mục Developers của Tingee.
+Bước 3: Cấu hình trên giao diện HASS
 
-Webhook ID: Tên đường dẫn bạn muốn (ví dụ: my_shop_payment).
+Vào Settings (Cài đặt) -> Devices & Services (Thiết bị & Dịch vụ).
 
-Media Player: Chọn loa muốn phát thông báo.
+Nhấn nút Add Integration (Thêm tích hợp) ở góc dưới bên phải.
 
-TTS Entity: Chọn thực thể Edge TTS (ví dụ: tts.edge_tts_2).
+Tìm kiếm từ khóa Tingee và chọn nó.
 
-Bước 3: Liên kết Webhook
-Ngay sau khi nhấn Submit, một thông báo (Persistent Notification) sẽ hiện lên ở biểu tượng hình chuông trong Home Assistant.
+Điền các thông số trong bảng hiện ra:
 
-Copy đường dẫn Webhook có dạng: https://domain-cua-ban.duckdns.org/api/webhook/webhook_id.
+Secret Key: Dán mã Token lấy ở Bước 1.
 
-Truy cập trang quản trị Tingee -> Developers -> Thêm Url và dán đường dẫn vừa copy vào.
+Webhook ID: Đặt tên bất kỳ (ví dụ: shop_thanh_toan). Lưu ý: Không dùng dấu cách hoặc ký tự đặc biệt.
 
-📊 Thông tin dữ liệu nhận được
-Mỗi khi có giao dịch, Tingee sẽ gửi các thông tin sau về Home Assistant: | Trường thông tin | Mô tả | | :--- | :--- | | amount | Số tiền giao dịch | | content | Nội dung chuyển khoản | | bank | Tên ngân hàng nhận | | transactionCode | Mã giao dịch | | transactionDate | Thời gian giao dịch (yyyyMMddHHmmss) |
+Media Player: Chọn loa bạn muốn phát thông báo (Ví dụ: media_player.google_home).
 
-🔔 Tự động hóa mẫu
-Ngoài tính năng TTS tự động có sẵn, bạn có thể dùng Event tingee_new_transaction để tạo các kịch bản riêng:
+TTS Entity: Chọn bộ đọc giọng nói (Ví dụ: tts.edge_tts_2).
 
-YAML
+Nhấn Submit.
 
-automation:
-  - alias: "Nháy đèn xanh khi nhận tiền"
-    trigger:
-      - platform: event
-        event_type: "tingee_new_transaction"
-    action:
-      - service: light.turn_on
-        target:
-          entity_id: light.quay_thu_ngan
-        data:
-          color_name: green
-          brightness_pct: 100
-⚠️ Lưu ý bảo mật
-HTTPS: Bạn phải cấu hình Home Assistant chạy dưới giao thức HTTPS (qua DuckDNS, Nabu Casa hoặc Cloudflare) để Tingee có thể gửi Webhook về.
+Bước 4: Lấy URL và dán vào Tingee
 
-Xác thực: Bộ tích hợp này đã cài đặt sẵn quy tắc kiểm tra tính toàn vẹn dữ liệu: HMAC_SHA512({timestamp}:{body}, SecretKey) theo đúng yêu cầu của Tingee.
+Sau khi cài xong, nhìn vào biểu tượng Cái chuông (Notifications) ở góc trái màn hình HASS.
+
+Bạn sẽ thấy một thông báo chứa đường dẫn Webhook (Dạng: https://your-domain.duckdns.org/api/webhook/shop_thanh_toan).
+
+Sao chép URL này.
+
+Quay lại trang Tingee (Developers) -> Nhấn Thêm URL -> Dán URL vào và nhấn Lưu.
+
+📊 Hiển thị lên Dashboard
+
+Để xem thông tin giao dịch trên màn hình chính:
+
+Nhấn Edit Dashboard -> Add Card.
+
+Chọn thẻ Entities.
+
+Tìm thực thể sensor.tingee_last_transaction.
+
+(Tùy chọn) Sử dụng thuộc tính (Attributes) để hiện thêm Nội dung hoặc Ngân hàng bằng cách sử dụng attribute trong card.
+
+🤖 Tự động hóa nâng cao (Automation)
+
+Bộ tích hợp tự động bắn một sự kiện (Event) có tên tingee_new_transaction. Bạn có thể dùng nó để làm các việc khác như nháy đèn:
+
+alias: "Nháy đèn khi có tiền về"
+trigger:
+  - platform: event
+    event_type: "tingee_new_transaction"
+action:
+  - service: light.turn_on
+    target:
+      entity_id: light.phong_khach
+    data:
+      flash: short
+      color_name: green
+
+
+❓ Xử lý sự cố (Troubleshooting)
+
+Lỗi "Handler is đã tồn tại": Xóa tích hợp cũ, khởi động lại HASS rồi cài lại với Webhook ID khác.
+
+Không nhận được Webhook: - Đảm bảo HASS của bạn có thể truy cập từ internet (Sử dụng HTTPS, Nabu Casa hoặc Cloudflare).
+
+Kiểm tra xem bạn đã dán đúng URL vào trang Tingee chưa.
+
+Loa không đọc: Kiểm tra xem thực thể tts bạn chọn có đang hoạt động hay không bằng cách vào mục Developer Tools -> Services để thử gọi tts.speak.
+
+🛡️ Bảo mật
+
+Mọi dữ liệu thanh toán được xử lý nội bộ trong Home Assistant của bạn. Chữ ký được kiểm tra cục bộ bằng Secret Token, đảm bảo chỉ có dữ liệu từ Tingee mới được chấp nhận.
+
+Phát triển bởi Cộng đồng Home Assistant Việt Nam.
