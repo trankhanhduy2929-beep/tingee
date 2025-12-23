@@ -3,8 +3,9 @@
   "name": "Tingee Notifier",
   "documentation": "https://tingee.gitbook.io/tai-lieu-hdsd-va-tich-hop-tingee",
   "dependencies": ["webhook", "tts"],
-  "codeowners": [],
+  "codeowners": ["@trankhanhduy2929"],
   "version": "1.0.0",
   "config_flow": true,
   "iot_class": "cloud_push"
 }
+
